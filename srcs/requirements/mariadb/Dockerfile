@@ -1,9 +1,10 @@
 FROM debian:buster
 
-RUN apt-get -y update && apt install -y mariadb-server
-ENV MARIADB_ROOT_PASSWORD="password"
-ENV MARIADB_DATABASE="demo"
-ENV MARIADB_USER="user"
-ENV MARIADB_PASSWORD="password"
-RUN service mysql start
-CMD ["echo", "hello" ]
+RUN apt-get -y update && apt install -y mariadb-server mariadb-client
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+COPY tools/setup.sh .
+RUN chmod +x setup.sh
+# RUN mkdir -p /run/mysqld/ && touch /run/mysqld/mysqld.sock
+RUN  service mysql start && ./setup.sh
+EXPOSE 3306
+CMD ["mysqld"]

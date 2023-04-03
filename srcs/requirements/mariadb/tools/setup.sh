@@ -1,15 +1,9 @@
-#! /bin/bash
+#!/bin/bash
 
-newUser='testuser'
-newDbPassword='testpwd'
-newDb='testdb'
-host=localhost
-#host='%'
+echo "CREATE DATABASE IF NOT EXISTS wordpress ;" > db1.sql
+echo "CREATE USER IF NOT EXISTS 'user1'@'%' IDENTIFIED BY 'password1' ;" >> db1.sql
+echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'user1'@'%' ;" >> db1.sql
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;" >> db1.sql
+echo "FLUSH PRIVILEGES;" >> db1.sql
 
-# MySQL 5.7 and earlier versions 
-TO '${newUser}'@'${host}' IDENTIFIED BY '${newDbPassword}';FLUSH PRIVILEGES;
-
-# MySQL 8 and higher versions
-commands="CREATE DATABASE \`${newDb}\`;CREATE USER '${newUser}'@'${host}' IDENTIFIED BY '${newDbPassword}';GRANT USAGE ON *.* TO '${newUser}'@'${host}';GRANT ALL ON \`${newDb}\`.* TO '${newUser}'@'${host}';FLUSH PRIVILEGES;"
-
-echo "${commands}" | /usr/bin/mysql -u root -p
+mysql < db1.sql
