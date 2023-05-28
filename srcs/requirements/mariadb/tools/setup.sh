@@ -1,9 +1,8 @@
 #!/bin/bash
+service mysql start
+echo "CREATE DATABASE IF NOT EXISTS $MARIADB_DATABASE;" | mysql
+echo "CREATE USER IF NOT EXISTS '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_PASSWORD' ;" | mysql
+echo "GRANT ALL PRIVILEGES ON $MARIADB_DATABASE.* TO '$MARIADB_USER'@'%' ;" | mysql
+echo "FLUSH PRIVILEGES;" | mysql
 
-echo "CREATE DATABASE IF NOT EXISTS wordpress ;" > db1.sql
-echo "CREATE USER IF NOT EXISTS 'user1'@'%' IDENTIFIED BY 'password1' ;" >> db1.sql
-echo "GRANT ALL PRIVILEGES ON wordpress.* TO 'user1'@'%' ;" >> db1.sql
-echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '12345' ;" >> db1.sql
-echo "FLUSH PRIVILEGES;" >> db1.sql
-
-mysql < db1.sql
+exec mysqld
