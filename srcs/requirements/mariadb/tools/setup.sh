@@ -5,4 +5,5 @@ echo "CREATE USER IF NOT EXISTS '$MARIADB_USER'@'%' IDENTIFIED BY '$MARIADB_PASS
 echo "GRANT ALL PRIVILEGES ON $MARIADB_DATABASE.* TO '$MARIADB_USER'@'%' ;" | mysql
 echo "FLUSH PRIVILEGES;" | mysql
 
+service mysql stop
 exec mysqld

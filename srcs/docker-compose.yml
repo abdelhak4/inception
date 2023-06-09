@@ -7,6 +7,7 @@ services:
   mariadb:
     build:
       context: ./requirements/mariadb
+    image: mariadb:1.0
     env_file: .env
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -17,6 +18,7 @@ services:
   wordpress:
     build:
       context: ./requirements/wordpress/
+    image: wordpress:1.0
     env_file: .env
     volumes:
       - wordpress_data:/var/www/html
@@ -24,12 +26,11 @@ services:
       - net
     depends_on:
       - mariadb
-    links:
-      - mariadb
 
   nginx:
     build:
       context: ./requirements/nginx
+    image: nginx:1.0
     volumes:
       - wordpress_data:/var/www/html
     ports:
